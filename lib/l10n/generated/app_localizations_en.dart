@@ -678,6 +678,72 @@ class AppLocalizationsEn extends AppLocalizations {
       'Modifications to the list of distracting apps is not permitted while the bedtime schedule is active.';
 
   @override
+  String get sleep_log_section_title => 'Sleep log';
+
+  @override
+  String get sleep_log_section_info =>
+      'Track your rest by logging when you sleep and wake up.';
+
+  @override
+  String get sleep_log_average_duration_label => 'Average sleep (7 days)';
+
+  @override
+  String sleep_log_selected_day_label(String duration, String date) =>
+      'Slept $duration on $date';
+
+  @override
+  String sleep_log_selected_day_empty(String date) =>
+      'No sleep logged on $date.';
+
+  @override
+  String get sleep_log_add_button => 'Log sleep';
+
+  @override
+  String get sleep_log_add_button_subtitle =>
+      'Record when you slept and woke up.';
+
+  @override
+  String get sleep_log_empty_message =>
+      'No sleep entries yet. Log your first night to unlock insights.';
+
+  @override
+  String sleep_entry_duration_label(String duration) => 'Duration: $duration';
+
+  @override
+  String get sleep_entry_remove_button_tooltip => 'Delete sleep entry';
+
+  @override
+  String get sleep_entry_delete_confirm_snack => 'Sleep entry removed.';
+
+  @override
+  String get sleep_entry_sleep_label => 'Bedtime';
+
+  @override
+  String get sleep_entry_wake_label => 'Wake up';
+
+  @override
+  String get sleep_entry_date_label => 'Date';
+
+  @override
+  String get sleep_entry_time_label => 'Time';
+
+  @override
+  String get sleep_entry_duration_title => 'Sleep duration';
+
+  @override
+  String get sleep_entry_save_button => 'Save entry';
+
+  @override
+  String get sleep_entry_short_duration_snack_alert =>
+      'Sleep duration should be at least 30 minutes.';
+
+  @override
+  String get sleep_entry_saved_snack_alert => 'Sleep entry saved.';
+
+  @override
+  String get sleep_entry_date_picker_title => 'Select date';
+
+  @override
   String get parental_controls_tab_title => 'Parental controls';
 
   @override

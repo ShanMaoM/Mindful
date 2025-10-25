@@ -65,6 +65,12 @@ class HeroTags {
   static String appLaunchLimitTileTag(String package) =>
       "appDashboard.launchLimitTile.$package";
 
+  /// Tag used to identify the sleep log start time picker.
+  static const sleepStartTimePickerTag = "sleepLog.startTimePicker";
+
+  /// Tag used to identify the sleep log end time picker.
+  static const sleepEndTimePickerTag = "sleepLog.endTimePicker";
+
   /// Tag used to identify in focus mode.
   static const focusModeFABTag = "focus.focusModeFab";
 
