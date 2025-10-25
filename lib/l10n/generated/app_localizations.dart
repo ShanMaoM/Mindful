@@ -1224,6 +1224,132 @@ abstract class AppLocalizations {
   /// **'Modifications to the list of distracting apps is not permitted while the bedtime schedule is active.'**
   String get bedtime_distracting_apps_modify_snack_alert;
 
+  /// No description provided for @sleep_log_section_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep log'**
+  String get sleep_log_section_title => 'Sleep log';
+
+  /// No description provided for @sleep_log_section_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your rest by logging when you sleep and wake up.'**
+  String get sleep_log_section_info =>
+      'Track your rest by logging when you sleep and wake up.';
+
+  /// No description provided for @sleep_log_average_duration_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Average sleep (7 days)'**
+  String get sleep_log_average_duration_label => 'Average sleep (7 days)';
+
+  /// No description provided for @sleep_log_selected_day_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Slept {duration} on {date}'**
+  String sleep_log_selected_day_label(String duration, String date) =>
+      'Slept $duration on $date';
+
+  /// No description provided for @sleep_log_selected_day_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No sleep logged on {date}.'**
+  String sleep_log_selected_day_empty(String date) =>
+      'No sleep logged on $date.';
+
+  /// No description provided for @sleep_log_add_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Log sleep'**
+  String get sleep_log_add_button => 'Log sleep';
+
+  /// No description provided for @sleep_log_add_button_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Record when you slept and woke up.'**
+  String get sleep_log_add_button_subtitle =>
+      'Record when you slept and woke up.';
+
+  /// No description provided for @sleep_log_empty_message.
+  ///
+  /// In en, this message translates to:
+  /// **'No sleep entries yet. Log your first night to unlock insights.'**
+  String get sleep_log_empty_message =>
+      'No sleep entries yet. Log your first night to unlock insights.';
+
+  /// No description provided for @sleep_entry_duration_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration: {duration}'**
+  String sleep_entry_duration_label(String duration) => 'Duration: $duration';
+
+  /// No description provided for @sleep_entry_remove_button_tooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete sleep entry'**
+  String get sleep_entry_remove_button_tooltip => 'Delete sleep entry';
+
+  /// No description provided for @sleep_entry_delete_confirm_snack.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep entry removed.'**
+  String get sleep_entry_delete_confirm_snack => 'Sleep entry removed.';
+
+  /// No description provided for @sleep_entry_sleep_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Bedtime'**
+  String get sleep_entry_sleep_label => 'Bedtime';
+
+  /// No description provided for @sleep_entry_wake_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Wake up'**
+  String get sleep_entry_wake_label => 'Wake up';
+
+  /// No description provided for @sleep_entry_date_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get sleep_entry_date_label => 'Date';
+
+  /// No description provided for @sleep_entry_time_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get sleep_entry_time_label => 'Time';
+
+  /// No description provided for @sleep_entry_duration_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep duration'**
+  String get sleep_entry_duration_title => 'Sleep duration';
+
+  /// No description provided for @sleep_entry_save_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Save entry'**
+  String get sleep_entry_save_button => 'Save entry';
+
+  /// No description provided for @sleep_entry_short_duration_snack_alert.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep duration should be at least 30 minutes.'**
+  String get sleep_entry_short_duration_snack_alert =>
+      'Sleep duration should be at least 30 minutes.';
+
+  /// No description provided for @sleep_entry_saved_snack_alert.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep entry saved.'**
+  String get sleep_entry_saved_snack_alert => 'Sleep entry saved.';
+
+  /// No description provided for @sleep_entry_date_picker_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select date'**
+  String get sleep_entry_date_picker_title => 'Select date';
+
   /// No description provided for @parental_controls_tab_title.
   ///
   /// In en, this message translates to:

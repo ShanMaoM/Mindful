@@ -23,6 +23,7 @@ import 'package:mindful/ui/common/styled_text.dart';
 import 'package:mindful/ui/common/sliver_tabs_bottom_padding.dart';
 import 'package:mindful/ui/screens/home/bedtime/bedtime_schedule_card.dart';
 import 'package:mindful/ui/screens/home/bedtime/bedtime_quick_actions.dart';
+import 'package:mindful/ui/screens/home/bedtime/sleep_log_section.dart';
 
 class TabBedtime extends ConsumerWidget {
   const TabBedtime({super.key});
@@ -111,6 +112,8 @@ class TabBedtime extends ConsumerWidget {
 
         /// Actions related to bedtime
         const BedtimeQuickActions(),
+
+        const SleepLogSection(),
 
         const SliverTabsBottomPadding()
       ],
