@@ -258,7 +258,6 @@
     "sleep_log_add_button": "Log sleep",
     "sleep_log_add_button_subtitle": "Record when you slept and woke up.",
     "sleep_log_empty_message": "No sleep entries yet. Log your first night to unlock insights.",
-    "sleep_log_retry_button": "Try again",
     "sleep_entry_duration_label": "Duration: {duration}",
     "@sleep_entry_duration_label": {
         "placeholders": {

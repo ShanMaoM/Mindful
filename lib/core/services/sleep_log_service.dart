@@ -12,20 +12,7 @@ import 'package:drift/drift.dart';
 import 'package:mindful/core/services/drift_db_service.dart';
 import 'package:mindful/models/sleep_entry_model.dart';
 
-/// Contract used to persist and retrieve sleep log sessions.
-abstract class SleepLogDataSource {
-  Future<List<SleepEntry>> fetchRecentSessions({int limit = 60});
-
-  Future<int> insertSession({
-    required DateTime sleepAt,
-    required DateTime wakeAt,
-    required int durationMinutes,
-  });
-
-  Future<void> deleteSession(int id);
-}
-
-class SleepLogService implements SleepLogDataSource {
+class SleepLogService {
   SleepLogService._();
 
   static final SleepLogService instance = SleepLogService._();
@@ -43,7 +30,6 @@ class SleepLogService implements SleepLogDataSource {
     ''');
   }
 
-  @override
   Future<List<SleepEntry>> fetchRecentSessions({int limit = 60}) async {
     await _ensureTable();
     final results = await DriftDbService.instance.driftDb.customSelect(
@@ -56,7 +42,6 @@ class SleepLogService implements SleepLogDataSource {
         .toList(growable: false);
   }
 
-  @override
   Future<int> insertSession({
     required DateTime sleepAt,
     required DateTime wakeAt,
@@ -74,7 +59,6 @@ class SleepLogService implements SleepLogDataSource {
     );
   }
 
-  @override
   Future<void> deleteSession(int id) async {
     await _ensureTable();
     await DriftDbService.instance.driftDb.customStatement(
