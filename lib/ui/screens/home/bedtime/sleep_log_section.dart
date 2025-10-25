@@ -176,11 +176,17 @@ class SleepLogSection extends ConsumerWidget {
                               context.locale.sleep_entry_remove_button_tooltip,
                           icon: const Icon(FluentIcons.delete_20_regular),
                           onPressed: () async {
-                            await ref
-                                .read(sleepSessionsProvider.notifier)
-                                .removeSession(session.id);
-                            context.showSnackAlert(context
-                                .locale.sleep_entry_delete_confirm_snack);
+                            try {
+                              await ref
+                                  .read(sleepSessionsProvider.notifier)
+                                  .removeSession(session.id);
+                              context.showSnackAlert(context
+                                  .locale.sleep_entry_delete_confirm_snack);
+                            } catch (_) {
+                              context.showSnackAlert(
+                                context.locale.operation_failed_snack_alert,
+                              );
+                            }
                           },
                         ),
                       ],
@@ -191,9 +197,23 @@ class SleepLogSection extends ConsumerWidget {
               ),
             );
           },
-          error: (error, _) => RoundedContainer(
+          error: (_, __) => RoundedContainer(
             padding: const EdgeInsets.all(16),
-            child: StyledText(error.toString(), isSubtitle: true),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                StyledText(
+                  context.locale.operation_failed_snack_alert,
+                  isSubtitle: true,
+                ),
+                12.vBox,
+                FilledButton.tonal(
+                  onPressed: () =>
+                      ref.read(sleepSessionsProvider.notifier).refresh(),
+                  child: Text(context.locale.sleep_log_retry_button),
+                ),
+              ],
+            ),
           ).sliver,
           loading: () => const SliverToBoxAdapter(
             child: Center(child: CircularProgressIndicator()),

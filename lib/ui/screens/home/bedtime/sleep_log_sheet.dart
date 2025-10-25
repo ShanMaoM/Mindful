@@ -132,10 +132,18 @@ class _SleepLogSheetState extends ConsumerState<SleepLogSheet> {
       return;
     }
 
-    await ref.read(sleepSessionsProvider.notifier).addSession(
-          sleepAt: _sleepAt,
-          wakeAt: _wakeAt,
-        );
+    try {
+      await ref.read(sleepSessionsProvider.notifier).addSession(
+            sleepAt: _sleepAt,
+            wakeAt: _wakeAt,
+          );
+    } on ArgumentError {
+      context.showSnackAlert(context.locale.operation_failed_snack_alert);
+      return;
+    } catch (_) {
+      context.showSnackAlert(context.locale.operation_failed_snack_alert);
+      return;
+    }
 
     if (!mounted) return;
     Navigator.of(context).pop();

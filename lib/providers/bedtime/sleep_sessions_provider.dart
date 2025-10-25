@@ -17,10 +17,15 @@ import 'package:mindful/core/utils/date_time_utils.dart';
 import 'package:mindful/models/sleep_entry_model.dart';
 import 'package:mindful/models/sleep_summary_model.dart';
 
+/// Dependency injection entry point for the sleep log data source.
+final sleepLogDataSourceProvider = Provider<SleepLogDataSource>(
+  (ref) => SleepLogService.instance,
+);
+
 /// Provides the list of recently logged sleep entries.
 final sleepSessionsProvider =
-    StateNotifierProvider<SleepSessionsNotifier, AsyncValue<List<SleepEntry>>>(
-  (ref) => SleepSessionsNotifier(),
+    AsyncNotifierProvider<SleepSessionsNotifier, List<SleepEntry>>(
+  SleepSessionsNotifier.new,
 );
 
 /// Provides weekly sleep summary for the last 7 days including durations and average sleep.
@@ -68,19 +73,27 @@ final weeklySleepSummaryProvider = Provider<SleepSummary>((ref) {
 /// Holds the currently selected day for the sleep chart.
 final selectedSleepDayProvider = StateProvider<DateTime>((ref) => dateToday);
 
-class SleepSessionsNotifier
-    extends StateNotifier<AsyncValue<List<SleepEntry>>> {
-  SleepSessionsNotifier() : super(const AsyncValue.loading()) {
-    _init();
+class SleepSessionsNotifier extends AsyncNotifier<List<SleepEntry>> {
+  static const _maxEntries = 60;
+
+  SleepLogDataSource get _dataSource => ref.read(sleepLogDataSourceProvider);
+
+  @override
+  Future<List<SleepEntry>> build() async {
+    final sessions =
+        await _dataSource.fetchRecentSessions(limit: _maxEntries);
+    return _sortAndLimit(sessions);
   }
 
-  Future<void> _init() async {
-    try {
-      final entries = await SleepLogService.instance.fetchRecentSessions();
-      state = AsyncValue.data(entries);
-    } catch (e, stack) {
-      state = AsyncValue.error(e, stack);
+  List<SleepEntry> _sortAndLimit(List<SleepEntry> sessions) {
+    final sorted = [...sessions]
+      ..sort((a, b) => b.sleepAt.compareTo(a.sleepAt));
+
+    if (sorted.length > _maxEntries) {
+      sorted.removeRange(_maxEntries, sorted.length);
     }
+
+    return sorted;
   }
 
   Future<void> addSession({
@@ -88,31 +101,53 @@ class SleepSessionsNotifier
     required DateTime wakeAt,
   }) async {
     final durationMinutes = wakeAt.difference(sleepAt).inMinutes;
+    if (durationMinutes <= 0) {
+      throw ArgumentError('Wake time must be after sleep time.');
+    }
 
-    final id = await SleepLogService.instance.insertSession(
-      sleepAt: sleepAt,
-      wakeAt: wakeAt,
-      durationMinutes: durationMinutes,
-    );
+    try {
+      final id = await _dataSource.insertSession(
+        sleepAt: sleepAt,
+        wakeAt: wakeAt,
+        durationMinutes: durationMinutes,
+      );
 
-    final session = SleepEntry(
-      id: id,
-      sleepAt: sleepAt,
-      wakeAt: wakeAt,
-      durationMinutes: durationMinutes,
-    );
+      final session = SleepEntry(
+        id: id,
+        sleepAt: sleepAt,
+        wakeAt: wakeAt,
+        durationMinutes: durationMinutes,
+      );
 
-    state = state.whenData((value) {
-      return [session, ...value]
-        ..sort((a, b) => b.sleepAt.compareTo(a.sleepAt));
-    });
+      final existing = state.value ?? const <SleepEntry>[];
+      state = AsyncValue.data(
+        _sortAndLimit([session, ...existing]),
+      );
+    } catch (error, stack) {
+      state = AsyncValue.error(error, stack);
+      rethrow;
+    }
   }
 
   Future<void> removeSession(int id) async {
-    await SleepLogService.instance.deleteSession(id);
+    try {
+      await _dataSource.deleteSession(id);
+      final existing = state.value ?? const <SleepEntry>[];
+      state = AsyncValue.data(
+        existing.where((session) => session.id != id).toList(growable: false),
+      );
+    } catch (error, stack) {
+      state = AsyncValue.error(error, stack);
+      rethrow;
+    }
+  }
 
-    state = state.whenData(
-      (value) => value.where((session) => session.id != id).toList(),
-    );
+  Future<void> refresh() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final sessions =
+          await _dataSource.fetchRecentSessions(limit: _maxEntries);
+      return _sortAndLimit(sessions);
+    });
   }
 }

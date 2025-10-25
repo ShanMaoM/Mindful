@@ -1277,6 +1277,12 @@ abstract class AppLocalizations {
   String get sleep_log_empty_message =>
       'No sleep entries yet. Log your first night to unlock insights.';
 
+  /// No description provided for @sleep_log_retry_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get sleep_log_retry_button => 'Try again';
+
   /// No description provided for @sleep_entry_duration_label.
   ///
   /// In en, this message translates to:

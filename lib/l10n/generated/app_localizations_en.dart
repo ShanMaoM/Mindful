@@ -707,6 +707,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'No sleep entries yet. Log your first night to unlock insights.';
 
   @override
+  String get sleep_log_retry_button => 'Try again';
+
+  @override
   String sleep_entry_duration_label(String duration) => 'Duration: $duration';
 
   @override
